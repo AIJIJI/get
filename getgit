@@ -2,11 +2,21 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+yum install -y curl-devel
+
 if [[ ! `which git` ]]
 then
     yum -y install git
 fi
+
+if [[ -e '/tmp/git' ]]
+then
+    rm -rf /tmp/git
+fi
+
 git clone https://github.com/git/git /tmp/git
+
 cd /tmp/git
+
 make prefix=/usr
 make install
