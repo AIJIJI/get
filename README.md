@@ -1,4 +1,4 @@
-# gets
+# get
 Install tools on CentOS7
 # Usage
 ## Python3.6
