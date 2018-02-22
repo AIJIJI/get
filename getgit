@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+if [[ ! `which git` ]]
+then
+    yum -y install git
+fi
+git clone https://github.com/git/git /tmp/git
+cd /tmp/git
+make prefix=/usr
+make install
