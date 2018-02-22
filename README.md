@@ -1,6 +1,6 @@
-# getpy36
-Install python36 on CentOS7
+# gets
+Install tools on CentOS7
 # Usage
-git clone https://github.com/AIJIJI/getpy36.git /tmp/getpy36
+git clone https://github.com/AIJIJI/gets.git /tmp/gets
 
 bash /tmp/getpy36/getpy36
