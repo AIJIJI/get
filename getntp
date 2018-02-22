@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# Set time zone.
+rm -f /etc/localtime
+cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# Set ntp
+yum install -y ntp
+sed -i "s/\(server [0-9]\.\)centos/\1cn/"   /etc/ntp.conf
+systemctl enable ntpd
+systemctl restart ntpd
+
