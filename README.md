@@ -1,11 +1,12 @@
 # gets
 Install tools on CentOS7
 # Usage
-## Python36
-git clone https://github.com/AIJIJI/gets.git /tmp/gets
-
-bash /tmp/gets/getpy36
+## Python3.6
+git clone https://github.com/AIJIJI/get.git /tmp/get<br/>
+bash /tmp/get/python3.6
 ## Git
-git clone https://github.com/AIJIJI/gets.git /tmp/gets
-
-bash /tmp/gets/getgit
+git clone https://github.com/AIJIJI/get.git /tmp/get
+bash /tmp/get/git
+## Fish
+git clone https://github.com/AIJIJI/get.git /tmp/get
+bash /tmp/get/fish
