@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 IFS=$'\n\t'
 
 # Check the version of current Python3
@@ -9,6 +9,7 @@ then
     exit 0  # Exit if version is 3.6
 fi
 
+set -e
 # Install
 yum groupinstall -y "Development tools"
 yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \

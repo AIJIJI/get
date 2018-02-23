@@ -1,4 +1,5 @@
 #!/bin/bash
+trap "rm -rf /tmp/git" EXIT
 set -euo pipefail
 IFS=$'\n\t'
 
@@ -26,6 +27,8 @@ fi
 git clone --depth 1 https://github.com/git/git /tmp/git
 cd /tmp/git
 # Install dependencies 
-yum install -y curl-devel openssl-devel
+yum install -y curl-devel openssl-devel expat-devel
 make prefix=/usr
 make install prefix=/usr
+
+
