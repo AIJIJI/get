@@ -23,7 +23,7 @@ if [[ -e '/tmp/git' ]]
 then
     rm -rf /tmp/git
 fi
-git clone -d 1 https://github.com/git/git /tmp/git
+git clone --depth 1 https://github.com/git/git /tmp/git
 cd /tmp/git
 # Install dependencies 
 yum install -y curl-devel openssl-devel
