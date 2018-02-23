@@ -23,8 +23,9 @@ if [[ -e '/tmp/git' ]]
 then
     rm -rf /tmp/git
 fi
-git clone https://github.com/git/git /tmp/git
+git clone -d 1 https://github.com/git/git /tmp/git
 cd /tmp/git
-yum install -y curl-devel  # Install dependencies 
+# Install dependencies 
+yum install -y curl-devel openssl-devel
 make prefix=/usr
 make install prefix=/usr
