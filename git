@@ -1,9 +1,12 @@
 #!/bin/bash
-tempdir=/tmp/git.$$
-trap "rm -rf $tempdir" EXIT
+
+## Shell Opts -----------------------------------------------------
 set -xeuo pipefail
 IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
 
+## Main -----------------------------------------------------
 # Make sure any git on this compute.
 if [[ ! `which git` ]]
 then

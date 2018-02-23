@@ -1,17 +1,14 @@
 #!/bin/bash
 
 ## Shell Opts ----------------------------------------------------------------
-set -xuo pipefail
+set -exuo pipefail
 IFS=$'\n\t'
-
-
-## Temp Dir ------------------------------------------------------------------
-tempdir=/tmp/python3.6.$$
+tempdir=$(mktemp -d)
 trap "rm -rf $tempdir" EXIT
 
 
 ## Main ----------------------------------------------------------------------
-
+set +e
 # Check the version of current Python3
 echo `python3 --version` | grep "Python 3.6"
 if [[ $? -eq 0 ]]

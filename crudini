@@ -1,9 +1,12 @@
 #!/usr/bin/bash
-tempdir="/tmp/crudini.$$"
-trap "rm -rf $tempdir" EXIT
+
+### Shell Opts ----------------------------------------- 
 set -xeuo pipefail
+tempdir=$(mktemp -d) 
+trap "rm -rf $tempdir" EXIT
 IFS=$'\n\t'
 
+### Main ----------------------------------------------------
 if [[ `which crudini` ]]
 then
     exit 0
