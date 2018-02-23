@@ -1,5 +1,7 @@
 #!/usr/bin/bash
-set -euo pipefail
+tempdir="/tmp/crudini.$$"
+trap "rm -rf $tempdir" EXIT
+set -xeuo pipefail
 IFS=$'\n\t'
 
 if [[ `which crudini` ]]
@@ -7,11 +9,7 @@ then
     exit 0
 fi
 
-if [[ -e /tmp/crudini ]]
-then 
-    rm -rf /tmp/crudini
-fi
 
-git clone https://github.com/pixelb/crudini.git /tmp/crudini
-cp /tmp/crudini/crudini /usr/bin/crudini
+git clone --depth 1 https://github.com/pixelb/crudini.git $tempdir
+cp $tempdir/crudini /usr/bin/crudini
 chmod +x /usr/bin/crudini

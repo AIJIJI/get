@@ -1,6 +1,16 @@
 #!/bin/bash
-set -uo pipefail
+
+## Shell Opts ----------------------------------------------------------------
+set -xuo pipefail
 IFS=$'\n\t'
+
+
+## Temp Dir ------------------------------------------------------------------
+tempdir=/tmp/python3.6.$$
+trap "rm -rf $tempdir" EXIT
+
+
+## Main ----------------------------------------------------------------------
 
 # Check the version of current Python3
 echo `python3 --version` | grep "Python 3.6"
@@ -15,9 +25,10 @@ yum groupinstall -y "Development tools"
 yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
                db4-devel libpcap-devel xz-devel openssl-devel
-wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz -O /tmp/Python-3.6.4.tar.xz
-cd /tmp 
-tar xvJf Python-3.6.4.tar.xz && cd Python-3.6.4
+wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz -O $tempdir/Python-3.6.4.tar.xz
+cd $tempdir 
+tar xvJf Python-3.6.4.tar.xz
+cd Python-3.6.4
 ./configure --prefix=/usr
 make
 make install

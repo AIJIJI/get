@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -xuo pipefail
 IFS=$'\n\t'
 
 yum install -y wget
