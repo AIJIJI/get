@@ -9,11 +9,13 @@ then
 fi
 
 # Check the version of current git.
+set +e
 echo `git --version` | grep -P '2\.[1-9][0-9]'
 if [[ $? -eq 0 ]]
 then
     exit 0 #  Exit if version >= 2.10
 fi 
+set -e
 
 
 # Install git via git.
