@@ -1,12 +1,12 @@
 # get
-Install tools on CentOS7
+Easy install software on CentOS7 in scripts.
 # Usage
 ## Python3.6
 git clone https://github.com/AIJIJI/get.git /tmp/get<br/>
 bash /tmp/get/python3.6
 ## Git
-git clone https://github.com/AIJIJI/get.git /tmp/get
+git clone https://github.com/AIJIJI/get.git /tmp/get<br/>
 bash /tmp/get/git
 ## Fish
-git clone https://github.com/AIJIJI/get.git /tmp/get
+git clone https://github.com/AIJIJI/get.git /tmp/get<br/>
 bash /tmp/get/fish
