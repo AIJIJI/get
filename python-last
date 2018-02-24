@@ -1,0 +1,21 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
+
+
+## Main ----------------------------------------------------------------------
+set +e
+
+
+# Install -------------------------------------------------------------
+
+git clone -b master --depth 1 https://github.com/python/cpython.git $tempdir
+
+cd $tempdir 
+./configure --prefix=/usr
+make
+make install
