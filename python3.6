@@ -17,15 +17,17 @@ then
 fi
 
 set -e
-# Install
+
+
+# Installi -------------------------------------------------------------
 yum groupinstall -y "Development tools"
 yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
                db4-devel libpcap-devel xz-devel openssl-devel wget
-wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tar.xz -O $tempdir/Python-3.6.4.tar.xz
+
+git clone -b 3.6 --depth 1 https://github.com/python/cpython.git $tempdir
+
 cd $tempdir 
-tar xvJf Python-3.6.4.tar.xz
-cd Python-3.6.4
 ./configure --prefix=/usr
 make
 make install
