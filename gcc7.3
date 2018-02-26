@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
+
+## Vars ----------------------------------------------------------------------
+URL=ftp://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz
+
+
+## Check ---------------------------------------------------------------------
+set +e
+gcc --version | grep 7
+if [[ $? -eq 0 ]]; then
+    exit 0
+fi
+set -e
+
+## Main ---------------------------------------------------------------------
+cd $tempdir
+wget $URL -O gcc.tar.gz
+tar -zxvf gcc.tar.gz
+cd gcc
+./contrib/download_prerequisites
+mkdir gcc-build
+cd gcc-build
+../configure --enable-checking=release --enable-languages=c,c++ \
+             --disable-multilib --prefix=/usr
+make
+yum -y remove gcc* g++*
+make install
