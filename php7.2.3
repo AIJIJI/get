@@ -1,0 +1,34 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
+
+
+## Main ----------------------------------------------------------------------
+set +e
+# Check the version of current Python3
+echo `python3 --version` | grep "Python 3.6"
+if [[ $? -eq 0 ]]
+then
+    exit 0  # Exit if version is 3.6
+fi
+
+set -e
+
+
+# Installi -------------------------------------------------------------
+yum groupinstall -y "Development tools"
+yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
+               openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
+               db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
+               uuid-devel libffi-devel libuuid-devel
+
+git clone -b 3.6 --depth 1 https://github.com/python/cpython.git $tempdir
+
+cd $tempdir 
+./configure --prefix=/usr
+make
+make install
