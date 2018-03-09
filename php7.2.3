@@ -23,7 +23,9 @@ yum groupinstall -y "Development tools"
 yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
-               uuid-devel libffi-devel libuuid-devel httpd-devel curl-devel
+               uuid-devel libffi-devel libuuid-devel httpd-devel curl-devel \
+               libjpeg-turbo-devel libpng-devel re2c libicu-devel openldap-devel\
+
 
 git clone -b PHP-7.2.3 --depth 1 https://github.com/php/php-src.git $tempdir
 
@@ -57,6 +59,9 @@ cd $tempdir
     --enable-xmlreader \
     --enable-xmlwriter \
     --enable-zip \
-    --with-zlib
+    --with-zlib \
+    --with-ldap \
+    --with-gettext \
+    --with-libdir=lib64
 make
 make install
