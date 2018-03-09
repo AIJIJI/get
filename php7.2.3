@@ -10,12 +10,11 @@ trap "rm -rf $tempdir" EXIT
 ## Main ----------------------------------------------------------------------
 set +e
 # Check the version of current Python3
-echo `python3 --version` | grep "Python 3.6"
+echo `php --version` | grep "PHP 7"
 if [[ $? -eq 0 ]]
 then
     exit 0  # Exit if version is 3.6
 fi
-
 set -e
 
 
@@ -24,11 +23,40 @@ yum groupinstall -y "Development tools"
 yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
-               uuid-devel libffi-devel libuuid-devel
+               uuid-devel libffi-devel libuuid-devel httpd-devel curl-devel
 
-git clone -b 3.6 --depth 1 https://github.com/python/cpython.git $tempdir
+git clone -b PHP-7.2.3 --depth 1 https://github.com/php/php-src.git $tempdir
 
 cd $tempdir 
-./configure --prefix=/usr
+./configure --prefix=/usr \
+    --enable-bcmath \
+    --with-apxs2 \
+    --with-bz2 \
+    --with-curl \
+    --enable-filter \
+    --enable-fpm \
+    --with-gd \
+    --enable-gd-native-ttf \
+    --with-freetype-dir \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --enable-intl \
+    --enable-mbstring \
+    --with-mcrypt \
+    --enable-mysqlnd \
+    --with-mysql-sock=/var/lib/mysql/mysql.sock \
+    --with-mysqli=mysqlnd \
+    --with-pdo-mysql=mysqlnd \
+    --with-pdo-sqlite \
+    --disable-phpdbg \
+    --disable-phpdbg-webhelper \
+    --enable-opcache \
+    --with-openssl \
+    --enable-simplexml \
+    --with-sqlite3 \
+    --enable-xmlreader \
+    --enable-xmlwriter \
+    --enable-zip \
+    --with-zlib
 make
 make install
