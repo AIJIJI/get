@@ -1,0 +1,22 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
+
+
+## Main ----------------------------------------------------------------------
+set +e
+# Check the version of current Python3
+echo `php --version` | grep "PHP 7"
+if [[ $? -eq 0 ]]
+then
+    exit 0  # Exit if version is 3.6
+fi
+set -e
+
+
+# Install -------------------------------------------------------------
+yum install -y httpd-devel
