@@ -27,3 +27,8 @@ yum-config-manager \
 sudo yum-config-manager \
     --add-repo \
 yum install docker-ce
+
+
+# Start docker daemon
+systemctl enable docker
+systemctl start docker
