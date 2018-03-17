@@ -9,7 +9,7 @@ trap "rm -rf $tempdir" EXIT
 
 ## Vars ----------------------------------------------------------------------
 URL=ftp://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz
-
+DIR=gcc-7.3.0
 
 ## Check ---------------------------------------------------------------------
 set +e
@@ -23,7 +23,7 @@ set -e
 cd $tempdir
 wget $URL -O gcc.tar.gz
 tar -zxvf gcc.tar.gz
-cd gcc
+cd $DIR
 ./contrib/download_prerequisites
 mkdir gcc-build
 cd gcc-build
