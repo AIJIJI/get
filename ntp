@@ -12,3 +12,4 @@ sed -i "s/\(server [0-9]\.\)centos/\1cn/"   /etc/ntp.conf
 systemctl enable ntpd
 systemctl restart ntpd
 
+echo 'NTP installed successfully!'

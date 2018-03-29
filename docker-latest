@@ -27,3 +27,5 @@ yum-config-manager \
 sudo yum-config-manager \
     --add-repo \
 yum install docker-ce
+
+echo 'Docker installed successfully!'

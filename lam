@@ -20,3 +20,5 @@ set -e
 
 # Install -------------------------------------------------------------
 yum install -y httpd-devel
+
+echo 'LAM installed successfully!'

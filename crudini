@@ -16,3 +16,5 @@ fi
 git clone --depth 1 https://github.com/pixelb/crudini.git $tempdir
 cp $tempdir/crudini /usr/bin/crudini
 chmod +x /usr/bin/crudini
+
+echo 'crudini installed successfully!'
