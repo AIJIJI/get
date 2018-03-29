@@ -8,18 +8,15 @@ trap "rm -rf $tempdir" EXIT
 
 
 ## Main ----------------------------------------------------------------------
-set +e
 # Check the version of current Python3
-echo `python3 --version` | grep "Python 3.6"
-if [[ $? -eq 0 ]]
+if [[ -n `python3 --version | grep -P "Python 3\.[6-9]"` ]]
 then
+echo 'Python>=3.6 already satisfied'
     exit 0  # Exit if version is 3.6
 fi
 
-set -e
 
-
-# Installi -------------------------------------------------------------
+# Install -------------------------------------------------------------
 yum groupinstall -y "Development tools"
 yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
