@@ -1,12 +1,17 @@
 # get
 Easy install software on CentOS7 in scripts.
 # Usage
+    git clone https://github.com/AIJIJI/get.git
+    cd get
 ## Python3.6
-git clone https://github.com/AIJIJI/get.git /tmp/get<br/>
-bash /tmp/get/python3.6
+    sudo ./python3.6
 ## Git
-git clone https://github.com/AIJIJI/get.git /tmp/get<br/>
-bash /tmp/get/git
+    sudo ./git
 ## Fish
-git clone https://github.com/AIJIJI/get.git /tmp/get<br/>
-bash /tmp/get/fish
+    sudo ./fish
+## PHP
+    sudo ./php7.2.3
+## GCC
+    sudo ./gcc7.3
+## Docker
+    sudo ./docker-latest

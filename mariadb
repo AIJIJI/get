@@ -1,0 +1,32 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
+
+
+## Main ----------------------------------------------------------------------
+# Check the version of current Python3
+if [[ -n `mysql -V | grep -P " 10"` ]]
+then
+echo 'Mariadb>=10 already satisfied'
+    exit 0  # Exit if version is 3.6
+fi
+
+yum -y remove mariadb mariadb-server || true
+# Install -------------------------------------------------------------
+
+yum groupinstall -y "Development tools"
+yum install -y cmake tar gunzip make bison libevent-devel \
+               ncurses-libs zlib-devel bzip2-devel jemalloc \
+               openssl-devel ncurses-devel libaio-devel \
+               libpcap-devel xz-devel openssl-devel sqlite-devel
+             
+git clone -b 10.3 --depth 1 https://github.com/MariaDB/server.git $tempdir
+
+cd $tempdir 
+cmake .  -DBUILD_CONFIG=mysql_release -DRPM=centos7
+make package
+echo 'Mariadb installed successfully!'
