@@ -1,0 +1,34 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+
+
+
+## Main ----------------------------------------------------------------------
+if [[ `whoami` == root ]]
+then
+    exit 0
+fi
+
+if [[ -d $HOME/bash-insulter ]]
+then
+echo 'Bash-insulter already satisfied'
+    exit 0  
+fi
+
+
+# Install -------------------------------------------------------------
+# yum groupinstall -y "Development tools"
+# yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
+#                openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
+#                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
+#                uuid-devel libffi-devel libuuid-devel
+
+git clone https://github.com/hkbakke/bash-insulter.git $HOME/bash-insulter
+echo 'if [ -f $HOME/bash-insulter/src/bash.command-not-found ]; then' >> $HOME/.bashrc
+echo '    source $HOME/bash-insulter/src/bash.command-not-found' >> $HOME/.bashrc
+echo 'fi' >> $HOME/.bashrc
+
+echo 'Bash-insulter installed successfully!'
