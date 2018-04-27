@@ -1,0 +1,31 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
+
+
+## Main ----------------------------------------------------------------------
+# Check the version of current Python3
+if [[ -n `which nginx` ]]
+then
+    echo 'nginx already satisfied, please remove the old version first'
+    exit 0  # Exit if version is 3.6
+fi
+
+
+# Install -------------------------------------------------------------
+wget http://nginx.org/download/nginx-1.14.0.tar.gz -O $tempdir/nginx.tgz
+
+cd $tempdir 
+tar -xzvf nginx.tgz
+cd nginx-1.14.0
+./configure \
+    --prefix=/usr/nginx \
+    --with-http_ssl_module \
+    --with-http_stub_status_module \
+    --with-http_gzip_static_module 
+make && make install
+echo 'Nginx 1.14 installed successfully!'
