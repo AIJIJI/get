@@ -6,10 +6,18 @@ IFS=$'\n\t'
 tempdir=$(mktemp -d)
 trap "rm -rf $tempdir" EXIT
 
+
+## Vars -----------------------
+VERSION=10.4.0
+
 ## Main -----------------------------------------------------
 cd $tempdir
-wget https://nodejs.org/dist/latest/node-v10.4.0.tar.gz
-cd node-v10.4.0
+
+
+
+wget https://nodejs.org/dist/latest/node-v$VERSION.tar.gz
+tar -xvf node-v$VERSION.tar.gz
+cd node-v$VERSION
 ./configure
 make
 make install 
