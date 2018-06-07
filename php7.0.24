@@ -25,12 +25,15 @@ yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
                uuid-devel libffi-devel libuuid-devel httpd-devel curl-devel \
                libjpeg-turbo-devel libpng-devel re2c libicu-devel openldap-devel\
+               libxml2-devel libzip-devel libmcrypt-devel
 
 
-git clone -b PHP-7.2.3 --depth 1 https://github.com/php/php-src.git $tempdir
+git clone -b PHP-7.0.24 --depth 1 https://github.com/php/php-src.git $tempdir
 
 cd $tempdir 
-./configure --prefix=/usr \
+
+./buildconf --force
+./configure --prefix=/usr/local/php7.0 \
     --enable-bcmath \
     --with-apxs2 \
     --with-bz2 \
@@ -63,6 +66,7 @@ cd $tempdir
     --with-ldap \
     --with-gettext \
     --with-libdir=lib64
+
 make
 make install
 echo 'PHP installed successfully!'

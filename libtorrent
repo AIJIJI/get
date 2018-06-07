@@ -1,0 +1,49 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+tempdir=$(mktemp -d)
+trap "rm -rf $tempdir" EXIT
+
+## Main ----------------------------------------------------------------------
+# Check the version of current Python3
+if [[ -z `python3 -c 'import libtorrent' 2>&1` ]]
+then
+    echo 'Libtorrent already satisfied'
+    exit 0  # Exit if version is 3.6
+fi
+
+
+# Install -------------------------------------------------------------
+# Install Boost
+# git clone --recursive https://github.com/boostorg/boost.git $tempdir/boost
+# cd boost
+# ./bootstrap.sh
+# ./b2 headers
+yum install boost boost-devel boost-system
+
+# Install Libtorrent
+wget https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_7/libtorrent-rasterbar-1.1.7.tar.gz -O $tempdir/libtorrent.tgz
+cd $tempdir 
+tar -xzvf libtorrent.tgz
+cd libtorrent-rasterbar-1.1.7
+./configure \
+    --prefix=/usr \
+    --enable-python-binding
+make
+make install
+
+# Binding Python
+cd bindings/python
+python3 setup.py build
+python3 setup.py install 
+
+# Final Check
+if [[ -z `python3 -c 'import libtorrent' 2>&1` ]]
+then
+    echo 'Libtorrent installed successfully!'
+else
+    echo 'Install Failed.'
+    exit 1
+fi

@@ -27,6 +27,20 @@ yum install -y cmake tar gunzip make bison libevent-devel \
 git clone -b 10.3 --depth 1 https://github.com/MariaDB/server.git $tempdir
 
 cd $tempdir 
-cmake .  -DBUILD_CONFIG=mysql_release -DRPM=centos7
-make package
+cmake .  \
+    -DBUILD_CONFIG=mysql_release \
+    -DRPM=centos7 \
+    -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+    -DSYSCONFDIR=/etc \
+    -DDEFAULT_CHARSET=utf8mb4 \
+    -DDEFAULT_COLLATION=utf8mb4_general_ci \
+    -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+    -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+    -DWITH_READLINE=1 \
+    -DWITH_SSL=system \
+    -DWITH_ZLIB=system \
+    -DWITH_LIBWRAP=0 \
+    -DMYSQL_UNIX_ADDR=/tmp/mysql.sock
+make
+make install
 echo 'Mariadb installed successfully!'

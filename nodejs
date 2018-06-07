@@ -7,29 +7,10 @@ tempdir=$(mktemp -d)
 trap "rm -rf $tempdir" EXIT
 
 ## Main -----------------------------------------------------
-# Make sure any git on this compute.
-if [[ ! `which git` ]]
-then
-    yum -y install git
-fi
-
-# Check the version of current git.
-set +e
-echo `git --version` | grep -P '2\.[1-9][0-9]'
-if [[ $? -eq 0 ]]
-then
-    exit 0 #  Exit if version >= 2.10
-fi 
-set -e
-
-
-# Install git via git.
-git clone --depth 1 https://github.com/nodejs/node.git $tempdir
 cd $tempdir
-# Install dependencies 
-yum install -y curl-devel openssl-devel expat-devel
-make prefix=/usr
-make install prefix=/usr
-
-
+wget https://nodejs.org/dist/latest/node-v10.4.0.tar.gz
+cd node-v8.11.1
+./configure
+make
+make install 
 echo 'NodeJS installed successfully!'
