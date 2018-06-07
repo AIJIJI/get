@@ -9,7 +9,7 @@ trap "rm -rf $tempdir" EXIT
 ## Main -----------------------------------------------------
 cd $tempdir
 wget https://nodejs.org/dist/latest/node-v10.4.0.tar.gz
-cd node-v8.11.1
+cd node-v10.4.0
 ./configure
 make
 make install 
