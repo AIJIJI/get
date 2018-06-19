@@ -1,32 +1,32 @@
-#!/bin/bash
+# #!/bin/bash
 
-## Shell Opts ----------------------------------------------------------------
-set -exuo pipefail
-IFS=$'\n\t'
-tempdir=$(mktemp -d)
-trap "rm -rf $tempdir" EXIT
-
-
-## Main ----------------------------------------------------------------------
-# Check the version of current Python3
-if [[ -n `python3 --version | grep -P "Python 3\.[6-9]"` ]]
-then
-echo 'Python>=3.6 already satisfied'
-    exit 0  # Exit if version is 3.6
-fi
+# ## Shell Opts ----------------------------------------------------------------
+# set -exuo pipefail
+# IFS=$'\n\t'
+# tempdir=$(mktemp -d)
+# trap "rm -rf $tempdir" EXIT
 
 
-# Install -------------------------------------------------------------
-yum groupinstall -y "Development tools"
-yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
-               openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
-               db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
-               uuid-devel libffi-devel libuuid-devel
+# ## Main ----------------------------------------------------------------------
+# # Check the version of current Python3
+# if [[ -n `python3 --version | grep -P "Python 3\.[6-9]"` ]]
+# then
+# echo 'Python>=3.6 already satisfied'
+#     exit 0  # Exit if version is 3.6
+# fi
 
-git clone -b 3.6 --depth 1 https://github.com/python/cpython.git $tempdir
 
-cd $tempdir 
-./configure --prefix=/usr
-make
-make install
-echo 'Python36 installed successfully!'
+# # Install -------------------------------------------------------------
+# yum groupinstall -y "Development tools"
+# yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
+#                openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
+#                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
+#                uuid-devel libffi-devel libuuid-devel
+
+# git clone -b 3.6 --depth 1 https://github.com/python/cpython.git $tempdir
+
+# cd $tempdir 
+# ./configure --prefix=/usr
+# make
+# make install
+# echo 'Python36 installed successfully!'
