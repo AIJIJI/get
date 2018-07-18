@@ -13,7 +13,7 @@ DIR=gcc-7.3.0
 
 ## Check ---------------------------------------------------------------------
 set +e
-gcc --version | grep 7
+gcc --version | grep -P '7\.\d\.\d'
 if [[ $? -eq 0 ]]; then
     exit 0
 fi
