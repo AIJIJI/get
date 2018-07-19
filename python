@@ -3,8 +3,7 @@
 ## Shell Opts ----------------------------------------------------------------
 set -exuo pipefail
 IFS=$'\n\t'
-tempdir=$(mktemp -d)
-trap "rm -rf $tempdir" EXIT
+
 
 ## Vars -----------------------------
 VERSION=$1
@@ -30,7 +29,18 @@ yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
                uuid-devel libffi-devel libuuid-devel
 
-git clone -b $VERSION --depth 1 https://github.com/python/cpython.git $tempdir
+if [[ -d "$2" ]]; then
+    tempdir=$2
+else
+    if [[ -n $2 ]]; then
+        tempdir=$(mktemp -d)
+        trap "rm -rf $tempdir" EXIT
+        git clone -b $VERSION --depth 1 https://github.com/python/cpython.git $tempdir
+    else
+        echo "$2 is not a git repo" 
+        exit 1
+    fi
+fi
 
 cd $tempdir 
 ./configure --prefix=/usr
