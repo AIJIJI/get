@@ -6,12 +6,19 @@ IFS=$'\n\t'
 tempdir=$(mktemp -d)
 trap "rm -rf $tempdir" EXIT
 
+## Vars -----------------------------
+VERSION=$1
+if [[ $VERSION != "3.6" && $VERSION != "3.7" ]]; then
+    echo "版本号选择 3.6/3.7"
+    exit 1
+fi
+
 
 ## Main ----------------------------------------------------------------------
 # Check the version of current Python3
-if [[ -n `python3 --version | grep -P "Python 3\.[6-9]"` ]]
+if [[ -n `python3 --version | grep -P "Python $VERSION"` ]]
 then
-echo 'Python>=3.6 already satisfied'
+echo "Python=$VERSION already satisfied"
     exit 0  # Exit if version is 3.6
 fi
 
@@ -23,10 +30,10 @@ yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
                uuid-devel libffi-devel libuuid-devel
 
-git clone -b 3.6 --depth 1 https://github.com/python/cpython.git $tempdir
+git clone -b $VERSION --depth 1 https://github.com/python/cpython.git $tempdir
 
 cd $tempdir 
 ./configure --prefix=/usr
 make
 make install
-echo 'Python36 installed successfully!'
+echo "Python$VERSION installed successfully!"
