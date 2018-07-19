@@ -3,8 +3,6 @@
 ## Shell Opts -----------------------------------------------------
 set -xeuo pipefail
 IFS=$'\n\t'
-tempdir=$(mktemp -d)
-trap "rm -rf $tempdir" EXIT
 
 ## Main -----------------------------------------------------
 # Make sure any git on this compute.
@@ -24,7 +22,19 @@ set -e
 
 
 # Install git via git.
-git clone --depth 1 https://github.com/git/git $tempdir
+if [[ -d "$1" ]]; then
+    tempdir=$1
+else
+    if [[ -n $1 ]]; then
+        tempdir=$(mktemp -d)
+        trap "rm -rf $tempdir" EXIT
+        git clone --depth 1 https://github.com/git/git $tempdir
+    else
+        echo "$1 is not a git repo" 
+        exit 1
+    fi
+fi
+
 cd $tempdir
 # Install dependencies 
 yum install -y curl-devel openssl-devel expat-devel
