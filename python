@@ -5,16 +5,9 @@ set -exuo pipefail
 IFS=$'\n\t'
 
 
-## Pre-check
-if [[ `openssl version | grep 1.1.1 ` ]]
-
-
 ## Vars -----------------------------
-VERSION=$1
-if [[ $VERSION != "3.6" && $VERSION != "3.7" ]]; then
-    echo "版本号选择 3.6/3.7"
-    exit 1
-fi
+VERSION=3.6
+GITDIR=/root/github/python$VERSION
 
 
 ## Main ----------------------------------------------------------------------
@@ -22,31 +15,23 @@ fi
 if [[ -n `python3 --version | grep -P "Python $VERSION"` ]]
 then
 echo "Python=$VERSION already satisfied"
-    exit 0  # Exit if version is 3.6
+    exit 0
 fi
 
 
 # Install -------------------------------------------------------------
 yum groupinstall -y "Development tools"
 yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
-               ncurses-devel  readline-devel tk-devel gdbm-devel\
+               openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
                db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
                uuid-devel libffi-devel libuuid-devel
 
-if [[ -d "$2" ]]; then
-    gitdir=$2
-else
-    if [[ -n $2 ]]; then
-        gitdir=/root/github/python$VERSION
-        git clone -b $VERSION --depth 1 https://github.com/python/cpython.git $gitdir
-    else
-        echo "$2 is not a git repo" 
-        exit 1
-    fi
+if [[ ! -d $GITDIR ]]; then
+    git clone -b $VERSION --depth 1 https://github.com/python/cpython.git $GITDIR
 fi
 
-cd $gitdir 
-./configure --prefix=/usr --with-ssl
+cd $GITDIR 
+./configure --prefix=/usr
 make
 make install
 echo "Python$VERSION installed successfully!"
