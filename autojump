@@ -12,16 +12,11 @@ GITDIR=/root/github/autojump
 ## Main ----------------------------------------------------------------------
 
 # Install -------------------------------------------------------------
-yum groupinstall -y "Development tools"
-yum install -y ncurses-devel ncurses-libs zlib-devel mysql-devel bzip2-devel \
-               openssl-devel ncurses-devel  readline-devel tk-devel gdbm-devel\
-               db4-devel libpcap-devel xz-devel openssl-devel sqlite-devel \
-               uuid-devel libffi-devel libuuid-devel
-
 if [[ ! -d $GITDIR ]]; then
     git clone git://github.com/joelthelion/autojump.git $GITDIR
 fi
 
 cd $GITDIR 
 ./install.py
-echo "Python$VERSION installed successfully!"
+echo '[[ -s /root/.autojump/etc/profile.d/autojump.sh ]] && source /root/.autojump/etc/profile.d/autojump.sh' >> ~/.bashrc
+echo "Autojump installed successfully!"

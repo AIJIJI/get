@@ -6,7 +6,7 @@ IFS=$'\n\t'
 
 
 ## Vars -----------------------------
-VERSION=3.6
+VERSION=3.7
 GITDIR=/root/github/python$VERSION
 
 
