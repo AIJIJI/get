@@ -1,0 +1,30 @@
+#!/bin/bash
+
+## Shell Opts ----------------------------------------------------------------
+set -exuo pipefail
+IFS=$'\n\t'
+
+
+## Vars -----------------------------
+LEPTO_DIR=/root/github/leptonica
+TESS_DIR=/root/github/tesseract
+
+## Main ----------------------------------------------------------------------
+# Install -------------------------------------------------------------
+yum install -y automake pkg-config pango-devel cairo-devel icu-devel
+
+git clone https://github.com/DanBloomberg/leptonica.git $LEPTO_DIR
+cd $LEPTO_DIR
+./configure --prefix=/usr
+make
+make install
+
+git clone https://github.com/tesseract-ocr/tesseract.git $TESS_DIR
+cd $TESS_DIR
+./autogen.sh
+./configure
+make
+make install
+ldconfig
+make training
+make training-install

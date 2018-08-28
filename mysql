@@ -1,0 +1,10 @@
+#!/bin/bash
+
+yum install mysql-community-server mysql-community-devel
+
+
+# ================= BIND
+yum install libcap-devel openssl-devel
+./configure --prefix=/usr/local/bind/ --with-dlz-mysql=/usr/local/mysql --enable-threads=no --enable-largefile --disable-ipv6 --with-openssl
+make
+make install
