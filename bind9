@@ -1,0 +1,20 @@
+# Install mysql
+cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DWITH_BOOST=./boost \
+    -DDEFAULT_CHARSET=utf8 \
+    -DDEFAULT_COLLATION=utf8_general_ci \
+    -DWITH_MYISAM_STORAGE_ENGINE=1 \
+    -DWITH_INNOBASE_STORAGE_ENGINE=1 \
+    -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+    -DWITH_BLACKHOLE_STORAGE_ENGINE=1 
+make
+make install
+
+# Install bind
+./configure --prefix=/usr/local/bind/ --with-dlz-mysql --enable-threads=no --enable-largefile --disable-ipv6 --with-openssl=no
+make
+make install
+
+/usr/local/bind/sbin/rndc-confgen >  /usr/local/bind/etc/rndc.conf 
+tail -10 /usr/local/bind/etc/rndc.conf | head -9 | sed s/#\ //g > /usr/local/bind/etc/named.conf 
