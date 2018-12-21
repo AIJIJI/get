@@ -26,7 +26,6 @@ if [[ $# == 1 ]]; then
     tempdir=$1
 else
     tempdir=$HOME/github/git
-    trap "rm -rf $tempdir" EXIT
     git clone --depth 1 https://github.com/git/git $tempdir
 fi
 
